@@ -35,11 +35,11 @@ void circleMgnum(CircleShape& shape, CircleShape& shape2, RenderWindow& window) 
 		}
 	}
 }
-void circleMgnum2(CircleShape& shape, CircleShape& shape2, RenderWindow& window) {
-	if (shape.getPosition().x >= (float)window.getSize().x - shape.getRadius() * 2) {
+void circleMgnum2(RectangleShape& shape, RectangleShape& shape2, RenderWindow& window) {
+	if (shape.getPosition().x >= (float)window.getSize().x - shape.getSize().x) {
 		shape2.setPosition(shape.getPosition().x - (float)window.getSize().x, shape2.getPosition().y);
 		if (shape.getPosition().x > ((float)window.getSize().x) * 2 - 1) {
-			shape.setPosition((float)window.getSize().x - shape.getRadius() * 2, shape.getPosition().y);
+			shape.setPosition((float)window.getSize().x - shape.getSize().x, shape.getPosition().y);
 		}
 	}
 	if (shape.getPosition().y <= 0) {
@@ -48,16 +48,16 @@ void circleMgnum2(CircleShape& shape, CircleShape& shape2, RenderWindow& window)
 			shape.setPosition(shape.getPosition().x, 0);
 		}
 	}
-	if (shape.getPosition().x - shape.getRadius() <= -shape.getRadius()) {
+	if (shape.getPosition().x <= 0) {
 		shape2.setPosition((float)window.getSize().x + shape.getPosition().x, shape2.getPosition().y);
 		if (-shape.getPosition().x > window.getSize().x) {
 			shape.setPosition(window.getSize().x, shape.getPosition().y);
 		}
 	}
-	if (shape.getPosition().y + shape.getRadius() * 2 >= window.getSize().y) {
+	if (shape.getPosition().y + shape.getSize().x >= window.getSize().y) {
 		shape2.setPosition(shape2.getPosition().x, -(float)window.getSize().y + shape.getPosition().y);
-		if (shape.getPosition().y + shape.getRadius() * 2 - (float)window.getSize().x > window.getSize().y) {
-			shape.setPosition(shape.getPosition().x, -shape.getRadius() * 2);
+		if (shape.getPosition().y + shape.getSize().x - (float)window.getSize().x > window.getSize().y) {
+			shape.setPosition(shape.getPosition().x, -shape.getSize().x);
 		}
 	}
 }
@@ -67,7 +67,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(400, 400), "Project");
 	window.setFramerateLimit(30);
 	sf::CircleShape shape(30.f);
-	sf::CircleShape shap(30.f);
+	RectangleShape shap(Vector2f(50, 50));
 
 	shape.setFillColor(sf::Color::Red);
 	shap.setFillColor(sf::Color::Black);
@@ -75,7 +75,7 @@ int main()
 	RectangleShape recShape(Vector2f(window.getSize()));
 
 	CircleShape shape2;
-	CircleShape shap2;
+	RectangleShape shap2;
 	shap.setPosition((float)window.getSize().x - shape.getRadius() * 2, 0);
 	shape2 = shape;
 	shap2 = shap;
